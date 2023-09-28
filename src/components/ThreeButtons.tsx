@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 const ThreeButtons = () => {
   return (
     <>
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center mt-36 h-screen">
         <div className="flex space-x-4">
           {/* Button 1 */}
           <Link to="/Document-Summerization">
-            <div className="relative inline-flex flex-col items-center px-16 py-16 overflow-hidden text-xl font-medium text-indigo-600 border-2 border-indigo-600 rounded-lg hover:text-white group hover:bg-gray-50">
+            <div className="relative inline-flex flex-col items-center px-16 py-16 overflow-hidden text-xl font-medium text-indigo-800 border-2 border-indigo-600 rounded-lg hover:text-white group hover:bg-gray-50 bg-white">
               <span className="absolute left-0 block w-full h-0 transition-all bg-indigo-600 opacity-100 group-hover:h-full top-1/2 group-hover:top-0 duration-400 ease"></span>
               <span className="absolute right-0 flex items-center justify-start w-10 h-10 duration-300 transform translate-x-full group-hover:translate-x-0 ease">
                 <svg
@@ -26,13 +26,13 @@ const ThreeButtons = () => {
                   ></path>
                 </svg>
               </span>
-              <span className="relative">Documents</span>
+              <span className="relative">Summarization</span>
             </div>
           </Link>
 
           {/* Button 2 */}
           <Link to="/News-Feed">
-            <div className="relative inline-flex flex-col items-center px-16 py-16 overflow-hidden text-xl font-medium text-indigo-600 border-2 border-indigo-600 rounded-lg hover:text-white group hover:bg-gray-50">
+            <div className="relative inline-flex flex-col items-center px-16 py-16 overflow-hidden text-xl font-medium text-indigo-600 border-2 border-indigo-600 rounded-lg hover:text-white group hover:bg-gray-50 bg-white ">
               <span className="absolute left-0 block w-full h-0 transition-all bg-indigo-600 opacity-100 group-hover:h-full top-1/2 group-hover:top-0 duration-400 ease"></span>
               <span className="absolute right-0 flex items-center justify-start w-10 h-10 duration-300 transform translate-x-full group-hover:translate-x-0 ease">
                 <svg
@@ -56,7 +56,7 @@ const ThreeButtons = () => {
 
           {/* Button 3 */}
           <Link to="/Grammar">
-            <div className="relative inline-flex flex-col items-center px-16 py-16 overflow-hidden text-xl font-medium text-indigo-600 border-2 border-indigo-600 rounded-lg hover:text-white group hover-bg-gray-50">
+            <div className="relative inline-flex flex-col items-center px-16 py-16 overflow-hidden text-xl font-medium text-indigo-600 border-2 border-indigo-600 rounded-lg hover:text-white group hover-bg-gray-50 bg-white">
               <span className="absolute left-0 block w-full h-0 transition-all bg-indigo-600 opacity-100 group-hover:h-full top-1/2 group-hover:top-0 duration-400 ease"></span>
               <span className="absolute right-0 flex items-center justify-start w-10 h-10 duration-300 transform translate-x-full group-hover:translate-x-0 ease">
                 <svg

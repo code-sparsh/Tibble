@@ -5,7 +5,7 @@ const NewsFeed = () => {
   return (
     <>
         <Layout>
-            <h1>hi this is the news feed section</h1>
+            <h1 className='mt-6'>Coming soon</h1>
         </Layout>
     </>
   )

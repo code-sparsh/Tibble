@@ -1,5 +1,7 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, dialog, ipcMain } from 'electron'
 import path from 'node:path'
+import { PDFLoader } from "langchain/document_loaders/fs/pdf";
+
 
 // The built directory structure
 //
@@ -23,6 +25,8 @@ function createWindow() {
     icon: path.join(process.env.VITE_PUBLIC, 'electron-vite.svg'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: true,
+      contextIsolation: false, 
     },
   })
 
@@ -55,6 +59,34 @@ app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow()
   }
+})
+
+const loadPDF = async (filePath: string) => {
+
+    const loader = new PDFLoader(filePath);
+    const docs = await loader.load();
+
+    if (win) {
+      win!.webContents.send('extracted-text', docs[0].pageContent);
+    }
+}
+
+ipcMain.on("upload-document", (event) => {
+
+  dialog.showOpenDialog({
+    properties: ['openFile'],
+    filters: [
+      { name: 'PDF Files', extensions: ['pdf'] },
+      { name: 'Text Files', extensions: ['txt'] }
+    ]
+  }).then(result => {
+    if (!result.canceled) {
+      const filePath = result.filePaths[0];
+      loadPDF(filePath)
+    }
+  }).catch(err => {
+    console.error(err);
+  });
 })
 
 app.whenReady().then(createWindow)

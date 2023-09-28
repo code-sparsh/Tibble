@@ -1,10 +1,10 @@
-# YourOfflineAssistant
+# Tibble
 
 Client application for YourOfflineAssistant (code-named Tibble)
 
 ## About
 
-YourOfflineAssistant is a tool for bringing the power of LLMs to your local PCs and Laptops
+Tibble is a tool for bringing the power of LLMs to your local PCs and Laptops
 
 ## 🛫 Quick Setup
 

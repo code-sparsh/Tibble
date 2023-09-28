@@ -1,28 +1,53 @@
 import React, { useState } from "react";
 import Layout from "../Layouts/Layout";
 
+const { ipcRenderer } = window.require('electron');
+
+
 const DocSum = () => {
   const [inputType, setInputType] = useState<"document" | "text">("document");
   const [text, setText] = useState<string>("");
   const [response, setResponse] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(event.target.value);
   };
 
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      // file upload handle kro yha pe
-    }
+  const handleFileUpload = () =>  {
+    ipcRenderer.send("upload-document")
   };
 
+  ipcRenderer.on("extracted-text", (event, text) => {
+    setText(text);
+    console.log(text)
+  });
+
   const handleSubmit = async () => {
-    if (inputType === "document") {
-      // agar docs upload kia toh yeh reuslt la logic likho
-    } else if (inputType === "text" && text) {
-      // agar text submit lkiya hai toh is result ka logic likho
+
+    setIsLoading(true)
+    
+    const response = await fetch("http://192.168.189.220:5001/summarize", {
+      method: "POST",
+      headers: {  
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        text: text
+      })
+    });
+
+    console.log(response)
+
+    if(!response.ok) {
+      setIsLoading(false)
+      return;
     }
+
+    const data = await response.json()
+
+    setResponse(data.result)
+    setIsLoading(false)
   };
 
   return (
@@ -54,7 +79,7 @@ const DocSum = () => {
         {inputType === 'document' ? (
           <div className="mb-6">
             <label className="block text-gray-600 mb-2">Upload Document:</label>
-            <input type="file" onChange={handleFileUpload} className="border rounded-md p-2 w-full" />
+            <button onClick={handleFileUpload} className="border rounded-md p-2 w-48">Choose a Document</button>
           </div>
         ) : (
           <div className="mb-6">
@@ -73,6 +98,10 @@ const DocSum = () => {
         >
           Submit
         </button>
+        {isLoading && 
+          <div className=" text-lg">
+            Loading....
+          </div>}
         {response && (
           <div className="mt-6">
             <label className="block text-gray-600 mb-2">Response:</label>
